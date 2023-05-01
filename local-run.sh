@@ -55,15 +55,18 @@ rsync -a zola/ build
 rsync -a content/ build/content
 
 # Use obsidian-export to export markdown content from obsidian
+# Obsidian→build/__docs(temporary directory)へ格納する
+# Frontmatter strategy (one of: always, never, auto) (default: auto)
 mkdir -p build/content/docs build/__docs
 if [ -z "$STRICT_LINE_BREAKS" ]; then
-	bin/obsidian-export --frontmatter=never --hard-linebreaks --no-recursive-embeds $VAULT build/__docs
+	bin/obsidian-export_MacOS-x86_64.bin --frontmatter=auto --hard-linebreaks --no-recursive-embeds $VAULT build/__docs
 else
-	bin/obsidian-export --frontmatter=never --no-recursive-embeds $VAULT build/__docs
+	bin/obsidian-export_MacOS-x86_64.bin --frontmatter=auto --no-recursive-embeds $VAULT build/__docs
 fi
 
 # Run conversion script
-source env.sh && python convert.py && rm env.sh
+source env.sh && rm env.sh
+python convert.py
 
 # Serve Zola site
 zola --root=build serve

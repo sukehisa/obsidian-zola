@@ -1,4 +1,5 @@
 import re
+import frontmatter
 from typing import Dict, List, Tuple
 
 from utils import (
@@ -24,8 +25,11 @@ if __name__ == "__main__":
     edges: List[Tuple[str, str]] = []
     section_count = 0
 
+
     all_paths = list(sorted(raw_dir.glob("**/*")))
 
+    # raw_dir: <utils.py location>/build/__docs
+    # all_paths: <utils.py location>/build/__docs/<all files and folders>
     for path in [raw_dir, *all_paths]:
         doc_path = DocPath(path)
         if doc_path.is_file:
@@ -44,17 +48,28 @@ if __name__ == "__main__":
 
                     edges.extend([doc_path.edge(rel_path) for rel_path in linked])
 
-                content = [
-                    "---",
-                    f'title: "{doc_path.page_title}"',
-                    f"date: {doc_path.modified}",
-                    f"updated: {doc_path.modified}",
-                    "template: docs/page.html",
-                    "---",
-                    # To add last line-break
-                    "",
-                ]
-                doc_path.write(["\n".join(content), *parsed_lines])
+                post = frontmatter.loads("".join(parsed_lines))
+                if post.get("title") is None:
+                    post.metadata["title"] = doc_path.page_title                
+                if post.get("date") is None:
+                    post.metadata["date"] = doc_path.modified
+                if post.get("updated") is None:
+                    post.metadata["updated"] = doc_path.modified
+                post.metadata["template"] = "docs/page.html"
+
+                doc_path.write(frontmatter.dumps(post))
+
+                # content = [
+                #     "---",
+                #     f'title: "{doc_path.page_title}"',
+                #     f"date: {doc_path.modified}",
+                #     f"updated: {doc_path.modified}",
+                #     "template: docs/page.html",
+                #     "---",
+                #     # To add last line-break
+                #     "",
+                # ]
+                # doc_path.write(["\n".join(content), *parsed_lines])
                 print(f"Found page: {doc_path.new_rel_path}")
             else:
                 # Resource
