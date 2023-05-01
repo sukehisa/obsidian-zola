@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pip install python-slugify frontmatter
+pip install python-slugify python-frontmatter
 
 # Avoid copying over netlify.toml (will ebe exposed to public API)
 echo "netlify.toml" >>__obsidian/.gitignore
