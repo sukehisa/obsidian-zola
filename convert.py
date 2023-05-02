@@ -35,17 +35,13 @@ if __name__ == "__main__":
         if doc_path.is_file:
             if doc_path.is_md:
                 # Page
-                nodes[doc_path.abs_url] = doc_path.page_title
                 content = doc_path.content
                 parsed_lines: List[str] = []
                 for line in content:
                     parsed_line, linked = DocLink.parse(line, doc_path)
-
                     # Fix LaTEX new lines
                     parsed_line = re.sub(r"\\\\\s*$", r"\\\\\\\\", parsed_line)
-
                     parsed_lines.append(parsed_line)
-
                     edges.extend([doc_path.edge(rel_path) for rel_path in linked])
 
                 post = frontmatter.loads("".join(parsed_lines))
@@ -57,7 +53,9 @@ if __name__ == "__main__":
                     post.metadata["updated"] = doc_path.modified
                 post.metadata["template"] = "docs/page.html"
 
-                doc_path.write(frontmatter.dumps(post))
+                if post.get("publish") == True:
+                    nodes[doc_path.abs_url] = doc_path.page_title
+                    doc_path.write(frontmatter.dumps(post))
 
                 # content = [
                 #     "---",
