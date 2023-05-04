@@ -70,4 +70,4 @@ python convert.py
 
 # Serve Zola site
 echo "########### serve Zola site ###########"
-zola --root=build serve
+zola --root=build serve --open

@@ -38,6 +38,10 @@
   flex-direction: row;
 }
 
+.navbar-nav-toc {
+  flex-direction: column;
+}
+
 .nav-item {
   margin-left: 1.25rem;
 }
@@ -106,6 +110,10 @@
     margin-top: 0;
     margin-left: 6rem;
     margin-right: 1.5rem;
+  }
+
+  .navbar-collapse #navbar-toc {
+    display: none;
   }
 }
 
@@ -204,7 +212,6 @@
 */
 
 /* Style the menu icon for the dropdown */
-
 .navbar .menu-icon {
   cursor: pointer;
 
@@ -252,6 +259,11 @@
   display: none;
 }
 
+.navbar .menu-btn:not(:checked) ~ .navbar-collapse {
+  display: none;
+}
+
+// collapseされるアイテムに対する指示
 .navbar .menu-btn:checked ~ .navbar-collapse {
   display: block;
   max-height: 100vh;
@@ -261,10 +273,10 @@
   background: transparent;
 }
 
+/* Rotating Hamberger Menu Icon */
 .navbar .menu-btn:checked ~ .menu-icon .navicon::before {
   transform: rotate(-45deg);
 }
-
 .navbar .menu-btn:checked ~ .menu-icon .navicon::after {
   transform: rotate(45deg);
 }
