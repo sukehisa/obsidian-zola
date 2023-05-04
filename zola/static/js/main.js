@@ -23,15 +23,15 @@ document.getElementById("mode").addEventListener("click", () => {
 });
 
 // Collapsible sidebar code (it's ugly but I don't care)
-var sections = $(".collapsible-section.sidebar");
+var sections_sidebar = $(".collapsible-section.sidebar");
 if (!sidebar_collapsed) {
-	sections.addClass("open");
+	sections_sidebar.addClass("open");
 }
 
 // Add click listener to all collapsible sections
-for (let i = 0; i < sections.length; i++) {
+for (let i = 0; i < sections_sidebar.length; i++) {
 	// Initial setup
-	let wrapper = $(sections[i].nextElementSibling);
+	let wrapper = $(sections_sidebar[i].nextElementSibling);
 	let wrapper_children = wrapper.find("> ul");
 
 	if (wrapper_children.length > 0) {
@@ -45,12 +45,12 @@ for (let i = 0; i < sections.length; i++) {
 	}
 
 	// Click listener
-	sections[i].addEventListener("click", function () {
+	sections_sidebar[i].addEventListener("click", function () {
 		// Toggle class
 		this.classList.toggle("open");
 
 		// Change wrapper height and class
-		let wrapper = $(sections[i].nextElementSibling);
+		let wrapper = $(sections_sidebar[i].nextElementSibling);
 		let wrapper_children = wrapper.find("> ul");
 
 		if (wrapper_children.length > 0) {
@@ -67,24 +67,24 @@ for (let i = 0; i < sections.length; i++) {
 }
 
 
-var sections = $(".collapsible-section.navbar");
+var sections_navbar = $(".collapsible-section.navbar");
 
 // Add click listener to all collapsible sections
-for (let i = 0; i < sections.length; i++) {
+for (let j = 0; j < sections_navbar.length; j++) {
 	// Initial setup
-	let wrapper = $(sections[i].nextElementSibling);
+	let wrapper = $(sections_navbar[j].nextElementSibling);
 	let wrapper_children = wrapper.find("> ul");
 
 	if (wrapper_children.length > 0) {
 		wrapper.height(0);
 	}
 	// Click listener
-	sections[i].addEventListener("click", function () {
+	sections_navbar[j].addEventListener("click", function () {
 		// Toggle class
 		this.classList.toggle("open");
 
 		// Change wrapper height and class
-		let wrapper = $(sections[i].nextElementSibling);
+		let wrapper = $(sections_navbar[j].nextElementSibling);
 		let wrapper_children = wrapper.find("> ul");
 
 		if (wrapper_children.length > 0) {
